@@ -1,0 +1,29 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><meta http-equiv="content-type" content="application/vnd.ms-excel; charset=UTF-8"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>Sheet0</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table><tr><td>Spot<br>#</td><td>ST.<br>PROV</td><td>License<br>Plate</td><td>Visitor's<br>Name</td><td>Visitor's<br> Contacts</td><td>Unit<br>#</td><td>Host's<br>Name</td><td>Host's<br>Contacts</td><td>From<br>Date/Time</td><td>To<br>Date/Time</td><td>Time<br>remaining</td></tr><tr><td>V02</td><td>ON</td><td>CMLV 333</td><td>
+                                                                        Andrina Stan                                                                    </td><td>+14166257333<br>andrinastan@gmail.com</td><td>
+                                                                        111                                                                    </td><td>
+                                                                        Mihai Nicula<br>
+                                                                    </td><td>
+                                                                                                                                                  +14165987777<br>mnicula@gmail.com                                                                    </td><td>Dec 15, 2022 00:00</td><td>Dec 16, 2022 11:59</td><td>
+                                                                            <span style="color:#28a745; font-weight: 600;">Valid</span><br>15 Hrs, 15 Min.<br>
+                                                                                                                                            </td></tr><tr><td>V01</td><td>ON</td><td>CMLV 333</td><td>
+                                                                        Andrina Stan                                                                    </td><td>+14166257333<br>andrinastan@gmail.com</td><td>
+                                                                        111                                                                    </td><td>
+                                                                        Mihai Nicula<br>
+                                                                    </td><td>
+                                                                                                                                                  +14165987777<br>mnicula@gmail.com                                                                    </td><td>Dec 16, 2022 00:00</td><td>Dec 17, 2022 00:00</td><td>
+                                                                            <span style="color:#007bff; font-weight: 600;">Not Started</span><br>3 Hrs, 16 Min.<br>
+                                                                                                                                            </td></tr><tr><td>V02</td><td>ON</td><td>CMLV 333</td><td>
+                                                                        Andrina Stan                                                                    </td><td>+14166257333<br>andrinastan@gmail.com</td><td>
+                                                                        111                                                                    </td><td>
+                                                                        Mihai Nicula<br>
+                                                                    </td><td>
+                                                                                                                                                  +14165987777<br>mnicula@gmail.com                                                                    </td><td>Dec 15, 2022 00:30</td><td>Dec 15, 2022 14:00</td><td>
+                                                                            <span style="color:#ff0000; font-weight: 600;">Expired</span><br>-6 Hrs, 44 Min.<br>
+                                                                                                                                            </td></tr><tr><td>V02</td><td>ON</td><td>CMET 633</td><td>
+                                                                        Maria Nicula                                                                    </td><td>+14165676913<br>maria.nicula@gmail.com</td><td>
+                                                                        111                                                                    </td><td>
+                                                                        Mihai Nicula<br>
+                                                                    </td><td>
+                                                                                                                                                  +14165987777<br>mnicula@gmail.com                                                                    </td><td>Dec 13, 2022 00:00</td><td>Dec 14, 2022 00:00</td><td>
+                                                                            <span style="color:#ff0000; font-weight: 600;">Expired</span><br>-1 Days, 20 Hrs, 44 Min.<br>
+                                                                                                                                            </td></tr></table></body></html>
