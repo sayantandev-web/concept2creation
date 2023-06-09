@@ -57,10 +57,15 @@ $route['translate_uri_dashes'] = TRUE;
 
 $route['home'] = "Home/index";
 $route['about'] = 'Home/about';
+$route['term'] = 'Home/term_conditions';
+$route['email_unsubscribe/(:any)'] = 'Home/email_unsubscribe';
+
 $route['course-list'] = 'home/courseList';
 $route['consulting'] = 'home/consulting';
 $route['course-detail/(:any)'] = "home/courseDetail/$1";
 $route['course-enrollment/(:any)'] = "home/courseEnrollment/$1";
+$route['checkout'] = "home/checkout";
+$route['success/(:any)'] = "home/success/$1";
 $route['contact'] = 'home/contact';
 $route['register'] = 'home/register';
 $route['email-verification/(:any)'] = "home/emailVerification/$1";

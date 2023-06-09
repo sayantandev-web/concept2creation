@@ -13,6 +13,7 @@ class Home extends CI_Controller {
 		$this->load->model('Apimodel');
 		$this->load->model('Commonmodel');
         $this->load->model('User_model');
+        $this->load->library('session');
 		require 'vendor/autoload.php';
 	}
 
@@ -256,6 +257,23 @@ class Home extends CI_Controller {
 		$this->load->view('payment');
 		$this->load->view('footer');
 	}
+
+    public function checkout() {
+        $data['user_id'] = $this->input->post('user_id');
+        //$data['course_id'] = $this->input->post('course_id');
+        $data['price_key'] = $this->input->post('enrollment');
+        $this->session->set_userdata('course_id', $this->input->post('course_id'));
+        $this->load->view('header', $data);
+		$this->load->view('checkout');
+		$this->load->view('footer');
+    }
+
+    public function success($id) {
+        $data['p_id'] = $id;
+        $this->load->view('header');
+		$this->load->view('success', $data);
+		$this->load->view('footer');
+    }
 
     public function reviewSave() {
 		$user_id = $this->session->userdata('user_id');

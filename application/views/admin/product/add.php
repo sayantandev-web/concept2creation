@@ -137,6 +137,14 @@
                 <div class="col-sm-10">
                   <div class="col-sm-6">
                     <div class="form-group">
+                      <label for="exampleInputEmail1">Price ID (Stripe Price ID) <span style="color: red">*</span></label>
+                      <input type="text" name="frm[price_key]" value="<?= $course->price_key ?>" class="form-control" id="exampleInputEmaila1" placeholder="Price ID (Stripe Price ID)" required>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-10">
+                  <div class="col-sm-6">
+                    <div class="form-group">
                       <img src="<?= site_url('assets/images/courses/' . $course->image) ?>" onerror="this.src='<?= site_url() ?>assets/images/no-image.png';" class="img-responsive" style="width:100px">
                       <label for="exampleInputEmail1">Image</label>
                       <input type="file" name="image" value="<?= $course->video ?>" class="form-control" id="exampleInputEmail1">
