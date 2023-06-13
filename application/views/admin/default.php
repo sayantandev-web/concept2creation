@@ -201,8 +201,8 @@
                     <li class="<?= ($tab == 'cert_list') ? 'active' : ''; ?>"><a href="<?= admin_url('course/certificate_courses') ?>"><i class="fa fa-circle"></i> Course Lists</a></li>
 
                     </ul>
-                    </li> -->
-                    <!-- <li class="treeview <?= ($tab == 'add_qz_bank' || $tab == 'ques_list' || $tab == 'ex_set' || $tab == 'ex_set_list' || $tab == 'add_blk_ques') ? 'active' : ''; ?>">
+                    </li>
+                    <li class="treeview <?= ($tab == 'add_qz_bank' || $tab == 'ques_list' || $tab == 'ex_set' || $tab == 'ex_set_list' || $tab == 'add_blk_ques') ? 'active' : ''; ?>">
                     <a href="#">
                     <i class="fa fa-file"></i>
                     <span>Question Management</span>
@@ -218,8 +218,8 @@
                     <li class="<?= ($tab == 'ex_set_list') ? 'active' : ''; ?>"><a href="<?= admin_url('question/set_exam_list') ?>"><i class="fa fa-circle"></i> Set Exam Test Lists</a></li>
 
                     </ul>
-                    </li> -->
-                    <!--<li class="treeview <?= ($tab == 'add_subscr' || $tab == 'subscr_list' || $tab == 'cat_list' || $tab == 'v_chapter' || $tab == 'ad_chapter' || $tab == 'v_mat' || $tab == 'ad_sub_chapter') ? 'active' : ''; ?>">
+                    </li>
+                    <li class="treeview <?= ($tab == 'add_subscr' || $tab == 'subscr_list' || $tab == 'cat_list' || $tab == 'v_chapter' || $tab == 'ad_chapter' || $tab == 'v_mat' || $tab == 'ad_sub_chapter') ? 'active' : ''; ?>">
                     <a href="#">
                     <i class="fa fa-book"></i>
                     <span>Subscriptions </span>
@@ -237,7 +237,7 @@
                     <li class="treeview <?= ($tab == 'add_cms' || $tab == 'cms') ? 'active' : ''; ?>">
                     <a href="#">
                     <i class="fa fa-cog"></i>
-                    <span>CMS Management</span>
+                    <span>Content Management</span>
                     <span class="pull-right-container">
                     <span class="pull-right-container"><i class="fa fa-angle-right pull-right"></i></span>
                     </span>
@@ -247,7 +247,7 @@
                     <li class="<?= ($tab == 'cms') ? 'active' : ''; ?>"><a href="<?= admin_url('cms') ?>"><i class="fa fa-circle"></i> CMS Lists</a></li>
                     </ul>
                     </li>
-                    <li class="treeview <?= ($tab == 'add_teams' || $tab == 'teams') ? 'active' : ''; ?>">
+                    <!-- <li class="treeview <?= ($tab == 'add_teams' || $tab == 'teams') ? 'active' : ''; ?>">
                     <a href="#">
                     <i class="fa fa-users"></i>
                     <span>Team Management</span>
@@ -260,7 +260,7 @@
                     <li class="<?= ($tab == 'teams') ? 'active' : ''; ?>"><a href="<?= admin_url('teams') ?>"><i class="fa fa-circle"></i>Team Lists</a></li>
                     </ul>
                     </li>
-                    <!-- <li class="treeview <?= ($tab == 'add_blog' || $tab == 'blog') ? 'active' : ''; ?>">
+                    <li class="treeview <?= ($tab == 'add_blog' || $tab == 'blog') ? 'active' : ''; ?>">
                     <a href="#">
                     <i class="fa fa-newspaper-o"></i>
                     <span>Media Management</span>

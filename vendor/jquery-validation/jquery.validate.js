@@ -1,21 +1,21 @@
-/*!
- * jQuery Validation Plugin v1.19.2
- *
- * https://jqueryvalidation.org/
- *
- * Copyright (c) 2020 Jörn Zaefferer
- * Released under the MIT license
- */
-(function( factory ) {
-	if ( typeof define === "function" && define.amd ) {
-		define( ["jquery"], factory );
-	} else if (typeof module === "object" && module.exports) {
-		module.exports = factory( require( "jquery" ) );
-	} else {
-		factory( jQuery );
-	}
-}(function( $ ) {
-
+/*!
+ * jQuery Validation Plugin v1.19.2
+ *
+ * https://jqueryvalidation.org/
+ *
+ * Copyright (c) 2020 Jörn Zaefferer
+ * Released under the MIT license
+ */
+(function( factory ) {
+	if ( typeof define === "function" && define.amd ) {
+		define( ["jquery"], factory );
+	} else if (typeof module === "object" && module.exports) {
+		module.exports = factory( require( "jquery" ) );
+	} else {
+		factory( jQuery );
+	}
+}(function( $ ) {
+
 $.extend( $.fn, {
 
 	// https://jqueryvalidation.org/validate/
@@ -1617,7 +1617,7 @@ $.extend( $.validator, {
 	}
 
 } );
-
+
 // Ajax mode: abort
 // usage: $.ajax({ mode: "abort"[, port: "uniqueport"]});
 // if mode:"abort" is used, the previous request on that port (port can be undefined) is aborted via XMLHttpRequest.abort()
@@ -1653,5 +1653,5 @@ if ( $.ajaxPrefilter ) {
 		return ajax.apply( this, arguments );
 	};
 }
-return $;
+return $;
 }));

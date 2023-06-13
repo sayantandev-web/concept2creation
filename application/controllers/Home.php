@@ -25,7 +25,7 @@ class Home extends CI_Controller {
         $data['home_list'] = $this->db->query($getHomeCourseListSql);
         $getcourselistsql = "SELECT * from `courses` WHERE `status` = '1' ORDER BY `id` DESC limit 6";
         $data['list'] = $this->Commonmodel->fetch_all_join($getcourselistsql);
-        $getReviewSql = "SELECT `courses`.`id`, `courses`.`heading_1`, `users`.`id`,`users`.`fname`, `users`.`lname`, `users`.`email`, `users`.`image`, `course_reviews`.`review_id`, `course_reviews`.`review_message` FROM `course_reviews` JOIN `courses` ON `courses`.`id` = `course_reviews`.`course_id` JOIN `users` ON `users`.`id` = `course_reviews`.`user_id` GROUP BY `users`.`id` ORDER BY `course_reviews`.`review_date` DESC";
+        $getReviewSql = "SELECT `courses`.`id`, `courses`.`title`, `users`.`id`,`users`.`fname`, `users`.`lname`, `users`.`email`, `users`.`image`, `course_reviews`.`review_id`, `course_reviews`.`review_message` FROM `course_reviews` JOIN `courses` ON `courses`.`id` = `course_reviews`.`course_id` JOIN `users` ON `users`.`id` = `course_reviews`.`user_id` GROUP BY `users`.`id` ORDER BY `course_reviews`.`review_date` DESC";
         $data['student_review'] = $this->db->query($getReviewSql)->result();
         $getPartnerListSql = "SELECT * from `gallery` WHERE `status` = '1' ORDER BY `id` DESC";
         $data['partners'] = $this->Commonmodel->fetch_all_join($getPartnerListSql);
@@ -40,7 +40,7 @@ class Home extends CI_Controller {
         $getAboutDataSql = "SELECT * FROM `cms` WHERE `id` = 1";
         $about_data = $this->db->query($getAboutDataSql);
         $data['aboutData'] = $about_data->result_array();
-        $getReviewSql = "SELECT `courses`.`id`, `courses`.`heading_1`, `users`.`id`,`users`.`fname`, `users`.`lname`, `users`.`email`, `users`.`image`, `course_reviews`.`review_id`, `course_reviews`.`review_message` FROM `course_reviews` JOIN `courses` ON `courses`.`id` = `course_reviews`.`course_id` JOIN `users` ON `users`.`id` = `course_reviews`.`user_id` GROUP BY `users`.`id` ORDER BY `course_reviews`.`review_date` DESC";
+        $getReviewSql = "SELECT `courses`.`id`, `courses`.`title`, `users`.`id`,`users`.`fname`, `users`.`lname`, `users`.`email`, `users`.`image`, `course_reviews`.`review_id`, `course_reviews`.`review_message` FROM `course_reviews` JOIN `courses` ON `courses`.`id` = `course_reviews`.`course_id` JOIN `users` ON `users`.`id` = `course_reviews`.`user_id` GROUP BY `users`.`id` ORDER BY `course_reviews`.`review_date` DESC";
         $data['student_review'] = $this->db->query($getReviewSql)->result();
 		$this->load->view('header', $data);
 		$this->load->view('about');
@@ -82,7 +82,7 @@ class Home extends CI_Controller {
 
     public function searchByInputValue() {
         $input_data = $this->input->post('input_data');
-        $getfilteredCourseListSql = "SELECT * from `courses` WHERE `heading_1` like '%".$input_data."%'";
+        $getfilteredCourseListSql = "SELECT * from `courses` WHERE `title` like '%".$input_data."%'";
         $filteredCourseList = $this->Commonmodel->fetch_all_join($getfilteredCourseListSql);
         $html = '';
         if(!empty($filteredCourseList)){
@@ -102,7 +102,7 @@ class Home extends CI_Controller {
                 $totalEnrolledUsr = $this->db->query($totalEnrolledSql)->num_rows();
                 $html .= '<div class="col-lg-6 col-md-6 col-sm-6 mb-40"><div class="courses-item"><div class="img-part">';
                 $html .= '<img src="'.@$image.'" alt="Course Image..."></div><div class="content-part"><h3 class="title truncate2 m-0">';
-                $html .= '<a href="'.base_url('course-detail/'.@$row->id).'">'.strip_tags($row->heading_1).'</a></h3>';
+                $html .= '<a href="'.base_url('course-detail/'.@$row->id).'">'.strip_tags($row->title).'</a></h3>';
                 $html .= '<ul class="meta-part m-0"><li class="user"><img src="'.base_url('user_assets/images/C2C_Home/Tag_Blue.png').'"></li><li><span class="price">$'.number_format($row->price, 2).'</span></li></ul>';
                 $html .= '<div class="bottom-part"><div class="info-meta"><ul><li class="ratings"><span class="stars">';
                 for ( $i = 1; $i <= 5; $i++ ) {
@@ -166,7 +166,7 @@ class Home extends CI_Controller {
                 $totalEnrolledUsr = $this->db->query($totalEnrolledSql)->num_rows();
                 $html .= '<div class="col-lg-6 col-md-6 col-sm-6 mb-40"><div class="courses-item"><div class="img-part">';
                 $html .= '<img src="'.@$image.'" alt="Course Image..."></div><div class="content-part"><h3 class="title truncate2 m-0">';
-                $html .= '<a href="'.base_url('course-detail/'.@$row->id).'">'.strip_tags($row->heading_1).'</a></h3>';
+                $html .= '<a href="'.base_url('course-detail/'.@$row->id).'">'.strip_tags($row->title).'</a></h3>';
                 $html .= '<ul class="meta-part m-0"><li class="user"><img src="'.base_url('user_assets/images/C2C_Home/Tag_Blue.png').'"></li><li><span class="price">$'.number_format($row->price, 2).'</span></li></ul>';
                 $html .= '<div class="bottom-part"><div class="info-meta"><ul><li class="ratings"><span class="stars">';
                 for ( $i = 1; $i <= 5; $i++ ) {
@@ -208,7 +208,7 @@ class Home extends CI_Controller {
                 $totalEnrolledUsr = $this->db->query($totalEnrolledSql)->num_rows();
                 $html .= '<div class="col-lg-6 col-md-6 col-sm-6 mb-40"><div class="courses-item"><div class="img-part">';
                 $html .= '<img src="'.@$image.'" alt="Course Image..."></div><div class="content-part"><h3 class="title truncate2 m-0">';
-                $html .= '<a href="'.base_url('course-detail/'.@$row->id).'">'.strip_tags($row->heading_1).'</a></h3>';
+                $html .= '<a href="'.base_url('course-detail/'.@$row->id).'">'.strip_tags($row->title).'</a></h3>';
                 $html .= '<ul class="meta-part m-0"><li class="user"><img src="'.base_url('user_assets/images/C2C_Home/Tag_Blue.png').'"></li><li><span class="price">$'.number_format($row->price, 2).'</span></li></ul>';
                 $html .= '<div class="bottom-part"><div class="info-meta"><ul><li class="ratings"><span class="stars">';
                 for ( $i = 1; $i <= 5; $i++ ) {
@@ -271,8 +271,8 @@ class Home extends CI_Controller {
     public function success($id) {
         $data['p_id'] = $id;
         $this->load->view('header');
-		$this->load->view('success', $data);
-		$this->load->view('footer');
+        $this->load->view('success', $data);
+        $this->load->view('footer');
     }
 
     public function reviewSave() {
@@ -338,7 +338,10 @@ class Home extends CI_Controller {
         $insert_id = $this->db->insert_id();
         if(!empty($insert_id)) {
             $subject = $sub;
-            $imagePath = base_url() . 'user_assets/images/C2C_Home/Header_Logo.png';
+            $getOptionsSql = "SELECT * FROM `options`";
+            $optionsList = $this->db->query($getOptionsSql)->result();
+            $imagePath = base_url().'uploads/logo/'.$optionsList[0]->option_value;
+            //$imagePath = base_url() . 'user_assets/images/C2C_Home/Header_Logo.png';
             $message = "<table style='width=100%;border=0;align=center;cellpadding=0;cellspacing=0'><tbody><tr><td><table class='col-600' style='margin-left:20px;margin-right:20px;border-left:1px solid #dbd9d9;border-right:1px solid #dbd9d9;border-top:2px solid #232323;width=600px;border=0;align=center;cellpadding=0;cellspacing=0'><tbody><tr><td align='left' style='padding:5px 10px;font-family:Raleway,sans-serif;font-size:16px;font-weight:700;color:#2a3a4b'><img src='".$imagePath."' style='max-height: 40px;'></td></tr><tr><td align='left' style='padding:5px 10px;font-family:Raleway,sans-serif;font-size:16px;font-weight:700;color:#2a3a4b'>Dear Team,</td></tr></tbody></table></td></tr><tr><td align='center'><table class='col-600' width='600' border='0' align='center' cellpadding='0' cellspacing='0' style='margin-left:20px;margin-right:20px;border-left:1px solid #dbd9d9;border-right:1px solid #dbd9d9;border-bottom:2px solid #232323'><tbody><tr><td align='left' style='padding:5px 10px;font-family:Lato,sans-serif;font-size:16px;color:#444;line-height:24px;font-weight:400'></td></tr><tr><td align='left' style='padding:5px 10px;font-family:Lato,sans-serif;font-size:16px;color:#444;line-height:24px;font-weight:400'><p style='background:#232323;color:#fff;padding:10px;text-decoration:none;line-height:24px'>Name : ".$fname."</p></td></tr>
             
             <tr>
@@ -421,14 +424,17 @@ class Home extends CI_Controller {
         $insert_id = $this->db->insert_id();
         if(!empty($insert_id)) {
             $subject = "Consult With Us";
-            $imagePath = base_url() . 'user_assets/images/C2C_Home/Header_Logo.png';
+            $getOptionsSql = "SELECT * FROM `options`";
+            $optionsList = $this->db->query($getOptionsSql)->result();
+            $imagePath = base_url().'uploads/logo/'.$optionsList[0]->option_value;
+            //$imagePath = base_url() . 'user_assets/images/C2C_Home/Header_Logo.png';
             $message = "<table style='width=100%;border=0;align=center;cellpadding=0;cellspacing=0'><tbody><tr><td><table class='col-600' style='margin-left:20px;margin-right:20px;border-left:1px solid #dbd9d9;border-right:1px solid #dbd9d9;border-top:2px solid #232323;width=600px;border=0;align=center;cellpadding=0;cellspacing=0'><tbody><tr><td align='left' style='padding:5px 10px;font-family:Raleway,sans-serif;font-size:16px;font-weight:700;color:#2a3a4b'><img src='".$imagePath."' style='max-height: 40px;'></td></tr><tr><td align='left' style='padding:5px 10px;font-family:Raleway,sans-serif;font-size:16px;font-weight:700;color:#2a3a4b'>Dear Team,</td></tr></tbody></table></td></tr><tr><td align='center'><table class='col-600' width='600' border='0' align='center' cellpadding='0' cellspacing='0' style='margin-left:20px;margin-right:20px;border-left:1px solid #dbd9d9;border-right:1px solid #dbd9d9;border-bottom:2px solid #232323'><tbody><tr><td align='left' style='padding:5px 10px;font-family:Lato,sans-serif;font-size:16px;color:#444;line-height:24px;font-weight:400'></td></tr><tr><td align='left' style='padding:5px 10px;font-family:Lato,sans-serif;font-size:16px;color:#444;line-height:24px;font-weight:400'><p style='background:#232323;color:#fff;padding:10px;text-decoration:none;line-height:24px'>Name : ".$fname."</p></td></tr><tr><td align='left' style='padding:5px 10px;font-family:Lato,sans-serif;font-size:16px;color:#444;line-height:24px;font-weight:400'><p style='background:#232323;color:#fff;padding:10px;text-decoration:none;line-height:24px'>Email: ".$email."</p></td></tr><tr><td align='left' style='padding:5px 10px;font-family:Lato,sans-serif;font-size:16px;color:#444;line-height:24px;font-weight:400'><p style='background:#232323;color:#fff;padding:10px;text-decoration:none;line-height:24px'>Phone: ".$phone."</p></td></tr><tr><td align='left' style='padding:5px 10px;font-family:Lato,sans-serif;font-size:16px;color:#444;line-height:24px;font-weight:400'><p style='background:#232323;color:#fff;padding:10px;text-decoration:none;line-height:24px'>Message: ".nl2br($msg)."</p></td></tr></tbody></table></td></tr></tbody></table>";
             $mail = new PHPMailer(true);
             try {
                 //Server settings
                 $mail->CharSet = 'UTF-8';
                 $mail->SetFrom($email);
-                $mail->AddAddress('sayantan@goigi.in', 'ContactToCreation');
+                $mail->AddAddress('no-reply@goigi.com', 'ContactToCreation');
                 $mail->IsHTML(true);
                 $mail->Subject = $subject;
                 $mail->Body = $message;
@@ -529,94 +535,16 @@ class Home extends CI_Controller {
 			if($userid) {
 				$subject = 'Verify Your Email Address From ConceptToCreation';
 				$activationURL = base_url() . "email-verification/" . urlencode(base64_encode($otp));
-				$imagePath = base_url() . 'assets/images/logo.png';
-				$message = "<table width='100%' border='0' align='center' cellpadding='0' cellspacing='0'>
-				<tbody>
-				<tr>
-				<td align='center'>
-				<table class='col-600' width='600' border='0' align='center' cellpadding='0' cellspacing='0' style='margin-left:20px; margin-right:20px; border-left: 1px solid #dbd9d9; border-right: 1px solid #dbd9d9; border-top:2px solid #232323'>
-				<tbody>
-				<tr>
-				<td height='35'></td>
-				</tr>
-				<tr>
-				<td align='left' style='padding:5px 10px;font-family: Raleway, sans-serif; font-size:16px; font-weight: bold; color:#2a3a4b;'><img src='" . $imagePath . "'/></td>
-				</tr>
-				<tr>
-				<td height='35'></td>
-				</tr>
-				<tr>
-				<td align='left' style='padding:5px 10px;font-family: Raleway, sans-serif; font-size:16px; font-weight: bold; color:#2a3a4b;'>Hello ".$first_name.",</td>
-				</tr>
-				<tr>
-				<td height='10'></td>
-				</tr>
-				<tr>
-				<td align='left' style='padding:5px 10px;font-family: Lato, sans-serif; font-size:16px; color:#444; line-height:24px; font-weight: 400;'>
-				Thank you for registration on <strong style='font-weight:bold;'>ConceptToCreation</strong>.
-				</td>
-				</tr>
-				</tbody>
-				</table>
-				</td>
-				</tr>
-				<tr>
-				<td align='center'>
-				<table class='col-600' width='600' border='0' align='center' cellpadding='0' cellspacing='0' style='margin-left:20px; margin-right:20px; border-left: 1px solid #dbd9d9; border-right: 1px solid #dbd9d9; border-bottom:2px solid #232323'>
-				<tbody>
-				<tr>
-				<td height='10'></td>
-				</tr>
-				<tr>
-				<td align='left' style='padding:5px 10px;font-family: Lato, sans-serif; font-size:16px; color:#444; line-height:24px; font-weight: 400;'>
-				Please click on the below activation link to verify your email address. 
-				</td>
-				</tr>
-				<tr>
-				<td height='10'></td>
-				</tr>
-				<tr>
-				<td align='left' style='text-align:center;padding:5px 10px;font-family: Lato, sans-serif; font-size:16px; color:#444; line-height:24px; font-weight: bold;'>
-				<a href=" . $activationURL . " target='_blank' style='background:#232323;color:#fff;padding:10px;text-decoration:none;line-height:24px;'>click here</a>
-				</td>
-				</tr>
-				<tr>
-				<td height='10'></td>
-				</tr>
-				<tr>
-				<td align='left' style='padding:5px 10px;font-family: Lato, sans-serif; font-size:16px; color:#444; line-height:24px; font-weight: bold;'>
-				Email: " . $email . "<br/>
-				</td>
-				</tr>
-				<tr>
-				<td height='30'></td>
-				</tr>
-				<tr>
-				<td align='left' style='padding:0 10px;font-family: Lato, sans-serif; font-size:16px; color:#232323; line-height:24px; font-weight: 700;'>
-				Thank you!
-				</td>
-				</tr>
-				<tr>
-				<td align='left' style='padding:0 10px;font-family: Lato, sans-serif; font-size:14px; color:#232323; line-height:24px; font-weight: 700;'>
-				Sincerely
-				</td>
-				</tr>
-				<tr>
-				<td align='left' style='padding:0 10px;font-family: Lato, sans-serif; font-size:14px; color:#232323; line-height:24px; font-weight: 700;'>
-				Team ConceptToCreation 
-				</td>
-				</tr>
-				</tbody>
-				</table>
-				</td>
-				</tr>
-				</tbody>
-				</table>";
+                $getOptionsSql = "SELECT * FROM `options`";
+                $optionsList = $this->db->query($getOptionsSql)->result();
+                $imagePath = base_url().'uploads/logo/'.$optionsList[0]->option_value;
+				//$imagePath = base_url() . 'assets/images/logo.png';
+				$message = "<table width='100%' border='0' align='center' cellpadding='0' cellspacing='0'> <tbody> <tr> <td align='center'> <table class='col-600' width='600' border='0' align='center' cellpadding='0' cellspacing='0' style='margin-left:20px; margin-right:20px; border-left: 1px solid #dbd9d9; border-right: 1px solid #dbd9d9; border-top:2px solid #232323'> <tbody> <tr> <td height='35'></td> </tr> <tr> <td align='left' style='padding:5px 10px;font-family: Raleway, sans-serif; font-size:16px; font-weight: bold; color:#2a3a4b;'><img src='" . $imagePath . "'/></td> </tr> <tr> <td height='35'></td> </tr> <tr> <td align='left' style='padding:5px 10px;font-family: Raleway, sans-serif; font-size:16px; font-weight: bold; color:#2a3a4b;'>Hello ".$first_name.",</td> </tr> <tr> <td height='10'></td> </tr> <tr> <td align='left' style='padding:5px 10px;font-family: Lato, sans-serif; font-size:16px; color:#444; line-height:24px; font-weight: 400;'>Thank you for registration on <strong style='font-weight:bold;'>ConceptToCreation</strong>.</td> </tr> <tr> <td height='10'></td> </tr> <tr> <td align='left' style='padding:5px 10px;font-family: Lato, sans-serif; font-size:16px; color:#444; line-height:24px; font-weight: 400;'>Please click on the below activation link to verify your email address.</td> </tr> <tr> <td height='10'></td> </tr> <tr> <td align='left' style='text-align:center;padding:5px 10px;font-family: Lato, sans-serif; font-size:16px; color:#444; line-height:24px; font-weight: bold;'> <a href=" . $activationURL . " target='_blank' style='background:#232323;color:#fff;padding:10px;text-decoration:none;line-height:24px;'>click here</a> </td> </tr> <tr> <td height='10'></td> </tr> <tr> <td align='left' style='padding:5px 10px;font-family: Lato, sans-serif; font-size:16px; color:#444; line-height:24px; font-weight: bold;'>Email: " . $email . "<br/></td> </tr> <tr> <td height='30'></td> </tr> <tr> <td align='left' style='padding:0 10px;font-family: Lato, sans-serif; font-size:16px; color:#232323; line-height:24px; font-weight: 700;'>Thank you!</td> </tr> <tr> <td align='left' style='padding:0 10px;font-family: Lato, sans-serif; font-size:14px; color:#232323; line-height:24px; font-weight: 700;'>Sincerely</td> </tr> <tr> <td align='left' style='padding:0 10px;font-family: Lato, sans-serif; font-size:14px; color:#232323; line-height:24px; font-weight: 700;'>ConceptToCreation</td> </tr> </tbody> </table> </td> </tr> </tbody> </table>";
 				$mail = new PHPMailer(true);
 				try {
 					//Server settings
 					$mail->CharSet = 'UTF-8';
-					$mail->SetFrom('no-reply@goigi.com', 'Localfood-joints');
+					$mail->SetFrom('no-reply@goigi.com', 'ConceptToCreation');
 					$mail->AddAddress($email);
 					$mail->IsHTML(true);
 					$mail->Subject = $subject;
@@ -736,7 +664,10 @@ class Home extends CI_Controller {
             $this->Commonmodel->update_row('users', $data, $where);
             $subject = 'Password reset from ConceptToCreation';
             $url = base_url() . "otp-verification/" . urlencode(base64_encode($otp));
-            $imagePath = base_url() . 'assets/images/logo.png';
+            $getOptionsSql = "SELECT * FROM `options`";
+            $optionsList = $this->db->query($getOptionsSql)->result();
+            $imagePath = base_url().'uploads/logo/'.$optionsList[0]->option_value;
+            //$imagePath = base_url() . 'assets/images/logo.png';
             $message = "<table width='100%' border='0' align='center' cellpadding='0' cellspacing='0'>
             <tbody>
             <tr>
@@ -800,7 +731,7 @@ class Home extends CI_Controller {
             </tr>
             <tr>
             <td align='left' style='padding:0 10px;font-family: Lato, sans-serif; font-size:14px; color:#232323; line-height:24px; font-weight: 700;'>
-            Team ConceptToCreation 
+            ConceptToCreation 
             </td>
             </tr>
             </tbody>

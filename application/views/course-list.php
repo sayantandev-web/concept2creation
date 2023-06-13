@@ -105,7 +105,7 @@
                             </div>
                             <div class="content-part">
                                 <h3 class="title truncate2 m-0">
-                                    <a href="<?=base_url('course-detail/'.@$value->id)?>"><?php if(@$value->heading_1) { echo strip_tags($value->heading_1); } ?></a>
+                                    <a href="<?=base_url('course-detail/'.@$value->id)?>"><?php if(@$value->title) { echo strip_tags($value->title); } ?></a>
                                 </h3>
                                 <ul class="meta-part m-0">
                                     <li class="user">

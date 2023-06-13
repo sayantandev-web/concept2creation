@@ -1,7 +1,7 @@
 <?php
 require 'vendor/autoload.php';
 require_once APPPATH."third_party/stripe/init.php";
-\Stripe\Stripe::setApiKey('sk_test_835fqzvcLuirPvH0KqHeQz9K');
+\Stripe\Stripe::setApiKey('sk_test_51NG6aKFoJzvzntq4UpLTpYCwazUyWiLjTDC2dett0Na0fAQjkqNPCasLo7nCTCisBX5BzRhIfmWO85ihAs4GsloW00PUsvhlau');
 
 $checkout_session = \Stripe\Checkout\Session::create([
     'success_url' => base_url('success/{CHECKOUT_SESSION_ID}'),
@@ -20,7 +20,7 @@ $session = \Stripe\Checkout\Session::retrieve($checkout_session['id']);
 </head>
 <body>
 <script type="text/javascript">
-    var stripe = Stripe('pk_test_kSKjcWbAp63mFILy3vx1mx7Z');
+    var stripe = Stripe('pk_test_51NG6aKFoJzvzntq4fnZMuARcyeHr6o5DQ6emASeF7YXQnHu89ND6J4rPexrWZvlsHeRiIkGcSeNU29l73lMAch6L005cKBwxM3');
     var session = "<?php echo $checkout_session['id']; ?>";
     stripe.redirectToCheckout({ sessionId: session }).then(function(result) {
     // If `redirectToCheckout` fails due to a browser or network

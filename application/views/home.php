@@ -32,6 +32,12 @@
                 foreach ($home_list->result_array() as $row) { ?>
                 <div class="col-lg-4 col-md-12 md-mb-30">
                     <div class="features-wrap">
+                        <?php if(!empty($row['course_url'])) {
+                            $url = $row['course_url'];
+                        } else {
+                            $url = 'javascript:void(0)';
+                        } ?>
+                        <a href="<?= $url?>" target="__blank">
                         <div class="row">
                             <div class="col-lg-3 align-items-center d-flex justify-content-center">
                                 <div class="icon-part">
@@ -55,6 +61,7 @@
                                 </div>
                             </div>
                         </div>
+                        </a>
                     </div>
                 </div>
             <?php } } ?>
@@ -93,7 +100,7 @@
                         <img src="<?php echo @$image; ?>" alt="Course Image...">
                     </div>
                     <div class="content-part">
-                        <h3 class="title truncate2 m-0"><a href="<?=base_url('course-detail/'.@$value->id)?>"><?php if(@$value->heading_1) { echo strip_tags($value->heading_1); } ?></a></h3>
+                        <h3 class="title truncate2 m-0"><a href="<?=base_url('course-detail/'.@$value->id)?>"><?php if(@$value->title) { echo strip_tags($value->title); } ?></a></h3>
                         <ul class="meta-part m-0">
                             <li class="user">
                                 <img src="<?php echo base_url('user_assets/images/C2C_Home/Tag_Blue.png');?>">

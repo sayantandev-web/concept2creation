@@ -15,7 +15,8 @@
             $(formMessages).removeClass('error');
             $(formMessages).addClass('success');
             $(formMessages).text(response);
-            $('#name, #email, #phone, #subject, #message').val('');
+            //$('#name, #email, #phone, #subject, #message, ').val('');
+            $('#contact-form')[0].reset();
         })
         .fail(function(data) {
             $(formMessages).removeClass('success');

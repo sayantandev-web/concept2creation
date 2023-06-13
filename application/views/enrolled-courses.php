@@ -141,9 +141,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-4">
-                                                <div class="dashboard-course-item__progress-bar-text ">
-                                                    <?php echo @$score; ?>% Complete</div>
-                                                </div>
+                                                <div class="dashboard-course-item__progress-bar-text "><?php echo @$score; ?>% Complete</div>
                                             </div>
                                         </div>
                                     </div>

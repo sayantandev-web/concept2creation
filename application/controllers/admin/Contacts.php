@@ -6,18 +6,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Contacts extends Admin_Controller {
 
-	public function __construct()
-	{
+	public function __construct() {
 		parent::__construct();
 		$this->admin_login();
 		require 'vendor/autoload.php';
+    }
 
-               
-	}
-
-	public function index($page=1)
-	{
-
+	public function index($page=1) {
 		if(isset($_GET['page'])){
 			$page = $_GET['page'];
 		}
@@ -63,16 +58,16 @@ class Contacts extends Admin_Controller {
 		$this->load->view(admin_view('default'),$this->data);
 
 	}
-        function delete($id){
-                if ($id > 0) {
+
+    function delete($id){
+        if ($id > 0) {
             $this->Master_model->delete($id,'contacts');
             $this->session->set_flashdata('success', 'row deleted successfully.');
         }
         redirect(admin_url('contacts'));
-        }
-     public function certificate_apply($page=1)
-        {
-
+    }
+    
+    public function certificate_apply($page=1) {
         if(isset($_GET['page'])){
             $page = $_GET['page'];
         }
@@ -118,97 +113,55 @@ class Contacts extends Admin_Controller {
         $this->load->view(admin_view('default'),$this->data);
 
     }
-     function contacts_reply($id=false){
-
-
-         $this->data['detl']= $detl=$this->db->get_where('contacts',array('id'=>$id))->row();
-         if($cmnts=$this->input->post('cmnts')){
-         $arr=array('rply_text'=>$cmnts,
-            'rply_status'=>1,
-            'rply_date'=>date("Y-m-d h:i:s"));
-
-        $htmlContent = "
-        <table align='center' style='width:650px; text-align:center; background:#8e88881f;'>
-        <tbody>
-        <tr style='height:50px;background-color:#ffeabf;'>
-        <td valign='middle' style='color:white;'><h2 class='start'>Concept To Creation</h2></td>
-        </tr>
-        <tr>
-        <td valign='top' align='center' colspan='2'>
-        <table align='center' style='height:380px; color:#000; width:600px;'>
-        <tbody>
-        <tr>
-        <td style='width:8px;'>&nbsp;</td>
-        <td align='center' style='font-size:28px;border-top:1px dashed #ccc;' colspan='3'>Hello, ".$detl->fname."</td>
-        </tr>
-        <tr>
-        <td valign='top' align='center' colspan='2'>
-        <p>".$cmnts."</p>
-        
-        <br>
-        Best Regards,<br>
-        Concept To Creation <br><br>
-        This is an automated response, please DO NOT reply.
-        </td>
-        </tr>
-        </tbody>
-        </table>
-        </td>
-        </tr>
-        </tbody>
-        </table>
-        ";
-
-    //     $this->load->library('email');
-    //     $this->email->set_mailtype("html");
-    //     $this->email->from('CCRC Team');
-    //     $this->email->to($detl->email);
-
-    //     $this->email->subject('Reply Message From CCRC');
-
-    //     $this->email->message($htmlContent);
-
-    //     if($this->email->send()){
-    //    $this->session->set_flashdata('success', 'Replied Successfully');
-    //    $this->db->update('contacts',$arr,array('id'=>$id));
-    //    redirect(admin_url('contacts'));
-
-    //         }
-
-    $mail = new PHPMailer(true);
-    try {
-        //Server settings
-        $mail->CharSet = 'UTF-8';
-        $mail->SetFrom($detl->email);
-        $mail->AddAddress($detl->email, 'Reply Email');
-        $mail->IsHTML(true);
-        $mail->Subject = 'Reply Message From Concepttocreation';
-        $mail->Body = $htmlContent;
-        //Send email via SMTP
-        $mail->IsSMTP();
-        $mail->SMTPAuth   = true;
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-        $mail->Host       = "smtp.gmail.com";
-        $mail->Port       = 587; //587 465
-        $mail->Username   = "no-reply@goigi.com";
-        $mail->Password   = "wj8jeml3eu0z";
-        $mail->send();
-        // echo 'Message has been sent';
-    } catch (Exception $e) {
-        $this->session->set_flashdata('error_message', "Message could not be sent. Mailer Error: {$mail->ErrorInfo}");
-    }
-    $this->session->set_flashdata('success', 'Replied Successfully');
-    $this->db->update('contacts',$arr,array('id'=>$id));
-    redirect(admin_url('contacts'));
-
-
-
-
+    
+    function contacts_reply($id=false){
+        $this->data['detl']= $detl=$this->db->get_where('contacts',array('id'=>$id))->row();
+        if($cmnts=$this->input->post('cmnts')){
+            $arr=array('rply_text'=>$cmnts,'rply_status'=>1,'rply_date'=>date("Y-m-d h:i:s"));
+            $getOptionsSql = "SELECT * FROM `options`";
+            $optionsList = $this->db->query($getOptionsSql)->result();
+            $imagePath = base_url().'uploads/logo/'.$optionsList[0]->option_value;
+            $htmlContent = "<table style='width=100%;border=0;align=center;cellpadding=0;cellspacing=0'><tbody><tr><td><table class='col-600' style='margin-left:20px;margin-right:20px;border-left:1px solid #dbd9d9;border-right:1px solid #dbd9d9;border-top:2px solid #232323;width=600px;border=0;align=center;cellpadding=0;cellspacing=0'><tbody><tr><td align='left' style='padding:5px 10px;font-family:Raleway,sans-serif;font-size:16px;font-weight:700;color:#2a3a4b'><img src='".$imagePath."' style='max-height: 40px;'></td></tr></tbody></table></td></tr><tr><td align='center'><table class='col-600' width='600' border='0' align='center' cellpadding='0' cellspacing='0' style='margin-left:20px;margin-right:20px;border-left:1px solid #dbd9d9;border-right:1px solid #dbd9d9;border-bottom:2px solid #232323'><tbody><tr><td align='left' style='padding:5px 10px;font-family:Lato,sans-serif;font-size:16px;color:#444;line-height:24px;font-weight:400'></td></tr><tr><td align='center' style='font-size:28px;border-top:1px dashed #ccc;' colspan='3'>Hello, ".$detl->fname."</td></tr><tr><td align='left' style='padding:5px 10px;font-family:Lato,sans-serif;font-size:16px;color:#444;line-height:24px;font-weight:400'><p style='background:#232323;color:#fff;padding:10px;text-decoration:none;line-height:24px'>".$cmnts."</p></td></tr><tr><td height='30'></td></tr><tr><td align='left' style='padding:0 10px;font-family: Lato, sans-serif; font-size:16px; color:#232323; line-height:24px; font-weight: 700;'>Thank you!</td></tr><tr><td align='left' style='padding:0 10px;font-family: Lato, sans-serif; font-size:14px; color:#232323; line-height:24px; font-weight: 700;'>Sincerely</td></tr><tr><td align='left' style='padding:0 10px;font-family: Lato, sans-serif; font-size:14px; color:#232323; line-height:24px; font-weight: 700;'>ConceptToCreation</td></tr></tbody></table></td></tr></tbody></table>";
+            // $this->load->library('email');
+            // $this->email->set_mailtype("html");
+            // $this->email->from('CCRC Team');
+            // $this->email->to($detl->email);
+            // $this->email->subject('Reply Message From CCRC');
+            // $this->email->message($htmlContent);
+            // if($this->email->send()){
+            //     $this->session->set_flashdata('success', 'Replied Successfully');
+            //     $this->db->update('contacts',$arr,array('id'=>$id));
+            //     redirect(admin_url('contacts'));
+            // }
+            $mail = new PHPMailer(true);
+            try {
+                //Server settings
+                $mail->CharSet = 'UTF-8';
+                $mail->SetFrom($detl->email);
+                $mail->AddAddress($detl->email, 'Reply Email');
+                $mail->IsHTML(true);
+                $mail->Subject = 'Reply Message From Concepttocreation';
+                $mail->Body = $htmlContent;
+                //Send email via SMTP
+                $mail->IsSMTP();
+                $mail->SMTPAuth   = true;
+                $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+                $mail->Host       = "smtp.gmail.com";
+                $mail->Port       = 587; //587 465
+                $mail->Username   = "no-reply@goigi.com";
+                $mail->Password   = "wj8jeml3eu0z";
+                $mail->send();
+                // echo 'Message has been sent';
+            } catch (Exception $e) {
+                $this->session->set_flashdata('error_message', "Message could not be sent. Mailer Error: {$mail->ErrorInfo}");
+            }
+            $this->session->set_flashdata('success', 'Replied Successfully');
+            $this->db->update('contacts',$arr,array('id'=>$id));
+            redirect(admin_url('contacts'));
         }
     }
-    public function view_review($page=1)
-    {
 
+    public function view_review($page=1) {
         if(isset($_GET['page'])){
             $page = $_GET['page'];
         }
@@ -254,68 +207,31 @@ class Contacts extends Admin_Controller {
         $this->load->view(admin_view('default'),$this->data);
 
     }
+
     function review_reply($id=false){
-
-         $this->data['detl']= $detl=$this->db->get_where('review',array('id'=>$id))->row();
-         $userd= $this->db->get_where('users',array('id'=>$detl->userid))->row();
-         if($cmnts=$this->input->post('cmnts')){
-         $arr=array('rply_text'=>$cmnts,
-            'rply_status'=>1,
-            'rply_date'=>date("Y-m-d h:i:s"));
-
-             $htmlContent = "
-        <table align='center' style='width:650px; text-align:center; background:#8e88881f;'>
-        <tbody>
-        <tr style='height:50px;background-color:#ffeabf;'>
-        <td valign='middle' style='color:white;'><h2 class='start'>CCRC</h2></td>
-        </tr>
-        <tr>
-        <td valign='top' align='center' colspan='2'>
-        <table align='center' style='height:380px; color:#000; width:600px;'>
-        <tbody>
-        <tr>
-        <td style='width:8px;'>&nbsp;</td>
-        <td align='center' style='font-size:28px;border-top:1px dashed #ccc;' colspan='3'>Hello, ".$userd->fname."</td>
-        </tr>
-        <tr>
-        <td valign='top' align='center' colspan='2'>
-        <p>".$cmnts."</p>
-        
-        <br>
-        Best Regards,<br>
-        CCRC <br><br>
-        This is an automated response, please DO NOT reply.
-        </td>
-        </tr>
-        </tbody>
-        </table>
-        </td>
-        </tr>
-        </tbody>
-        </table>
-        ";
-
-        $this->load->library('email');
-        $this->email->set_mailtype("html");
-        $this->email->from('CCRC Team');
-        $this->email->to($userd->email);
-
-        $this->email->subject('Reply Message From CCRC');
-
-        $this->email->message($htmlContent);
-
-        if($this->email->send()){
-       $this->session->set_flashdata('success', 'Replied Successfully');
-       $this->db->update('review',$arr,array('id'=>$id));
-       redirect(admin_url('contacts/view_review'));
-
+        $this->data['detl']= $detl=$this->db->get_where('review',array('id'=>$id))->row();
+        $userd= $this->db->get_where('users',array('id'=>$detl->userid))->row();
+        if($cmnts=$this->input->post('cmnts')){
+            $arr=array('rply_text'=>$cmnts, 'rply_status'=>1, 'rply_date'=>date("Y-m-d h:i:s"));
+            $getOptionsSql = "SELECT * FROM `options`";
+            $optionsList = $this->db->query($getOptionsSql)->result();
+            $imagePath = base_url().'uploads/logo/'.$optionsList[0]->option_value;
+            $htmlContent = "<table style='width=100%;border=0;align=center;cellpadding=0;cellspacing=0'><tbody><tr><td><table class='col-600' style='margin-left:20px;margin-right:20px;border-left:1px solid #dbd9d9;border-right:1px solid #dbd9d9;border-top:2px solid #232323;width=600px;border=0;align=center;cellpadding=0;cellspacing=0'><tbody><tr><td align='left' style='padding:5px 10px;font-family:Raleway,sans-serif;font-size:16px;font-weight:700;color:#2a3a4b'><img src='".$imagePath."' style='max-height: 40px;'></td></tr></tbody></table></td></tr><tr><td align='center'><table class='col-600' width='600' border='0' align='center' cellpadding='0' cellspacing='0' style='margin-left:20px;margin-right:20px;border-left:1px solid #dbd9d9;border-right:1px solid #dbd9d9;border-bottom:2px solid #232323'><tbody><tr><td align='left' style='padding:5px 10px;font-family:Lato,sans-serif;font-size:16px;color:#444;line-height:24px;font-weight:400'></td></tr><tr><td align='center' style='font-size:28px;border-top:1px dashed #ccc;' colspan='3'>Hello, ".$userd->fname."</td></tr><tr><td align='left' style='padding:5px 10px;font-family:Lato,sans-serif;font-size:16px;color:#444;line-height:24px;font-weight:400'><p style='background:#232323;color:#fff;padding:10px;text-decoration:none;line-height:24px'>".$cmnts."</p></td></tr><tr><td height='30'></td></tr><tr><td align='left' style='padding:0 10px;font-family: Lato, sans-serif; font-size:16px; color:#232323; line-height:24px; font-weight: 700;'>Thank you!</td></tr><tr><td align='left' style='padding:0 10px;font-family: Lato, sans-serif; font-size:14px; color:#232323; line-height:24px; font-weight: 700;'>Sincerely</td></tr><tr><td align='left' style='padding:0 10px;font-family: Lato, sans-serif; font-size:14px; color:#232323; line-height:24px; font-weight: 700;'>ConceptToCreation</td></tr></tbody></table></td></tr></tbody></table>";
+            $this->load->library('email');
+            $this->email->set_mailtype("html");
+            $this->email->from('CCRC Team');
+            $this->email->to($userd->email);
+            $this->email->subject('Reply Message From CCRC');
+            $this->email->message($htmlContent);
+            if($this->email->send()){
+                $this->session->set_flashdata('success', 'Replied Successfully');
+                $this->db->update('review',$arr,array('id'=>$id));
+                redirect(admin_url('contacts/view_review'));
+            }
         }
     }
-   
-    }
- public function certificate_review($page=1) 
-    {
 
+    public function certificate_review($page=1) {
         if(isset($_GET['page'])){
             $page = $_GET['page'];
         }
@@ -359,11 +275,9 @@ class Contacts extends Admin_Controller {
         $this->pagination->initialize($config);
         $this->data['paginate'] = $this->pagination->create_links();
         $this->load->view(admin_view('default'),$this->data);
-
     }
-    public function stay_with_us($page=1)
-    {
 
+    public function stay_with_us($page=1) {
         if(isset($_GET['page'])){
             $page = $_GET['page'];
         }
@@ -409,6 +323,7 @@ class Contacts extends Admin_Controller {
         $this->load->view(admin_view('default'),$this->data);
 
     }
+
     function stay_delete($id){
        if ($id > 0) {
             $this->Master_model->delete($id,'consulting_form');
@@ -417,156 +332,69 @@ class Contacts extends Admin_Controller {
         redirect(admin_url('contacts/stay_with_us'));
     }
 
-   function certificate_reply($id=false)
-   {
-         $this->data['detl']= $detl=$this->db->get_where('cert_verify',array('id'=>$id))->row();
-         if($cmnts=$this->input->post('cmnts')){
-         $arr=array('rply_text'=>$cmnts,
-            'rply_status'=>1,
-            'rply_date'=>date("Y-m-d h:i:s"));
-
-        $htmlContent = "
-        <table align='center' style='width:650px; text-align:center; background:#8e88881f;'>
-        <tbody>
-        <tr style='height:50px;background-color:#ffeabf;'>
-        <td valign='middle' style='color:white;'><h2 class='start'>CCRC</h2></td>
-        </tr>
-        <tr>
-        <td valign='top' align='center' colspan='2'>
-        <table align='center' style='height:380px; color:#000; width:600px;'>
-        <tbody>
-        <tr>
-        <td style='width:8px;'>&nbsp;</td>
-        <td align='center' style='font-size:28px;border-top:1px dashed #ccc;' colspan='3'>Hello, ".$detl->fname."</td>
-        </tr>
-        <tr>
-        <td valign='top' align='center' colspan='2'>
-        <p>".$cmnts."</p>
-        
-        <br>
-        Best Regards,<br>
-        CCRC <br><br>
-        This is an automated response, please DO NOT reply.
-        </td>
-        </tr>
-        </tbody>
-        </table>
-        </td>
-        </tr>
-        </tbody>
-        </table>
-        ";
-
-        $this->load->library('email');
-        $this->email->set_mailtype("html");
-        $this->email->from('CCRC Team');
-        $this->email->to($detl->email);
-
-        $this->email->subject('Cerificate Verification From CCRC');
-
-        $this->email->message($htmlContent);
-
-        if($this->email->send()){
-       $this->session->set_flashdata('success', 'Mail Sent Successfully');
-       $this->db->update('cert_verify',$arr,array('id'=>$id));
-       redirect(admin_url('contacts/certificate_review'));
-
+   function certificate_reply($id=false) {
+        $this->data['detl']= $detl=$this->db->get_where('cert_verify',array('id'=>$id))->row();
+        if($cmnts=$this->input->post('cmnts')){
+            $arr=array('rply_text'=>$cmnts, 'rply_status'=>1, 'rply_date'=>date("Y-m-d h:i:s"));
+            $htmlContent = "<table align='center' style='width:650px; text-align:center; background:#8e88881f;'><tbody><tr style='height:50px;background-color:#ffeabf;'><td valign='middle' style='color:white;'><h2 class='start'>CCRC</h2></td></tr><tr><td valign='top' align='center' colspan='2'><table align='center' style='height:380px; color:#000; width:600px;'><tbody><tr><td style='width:8px;'>&nbsp;</td><td align='center' style='font-size:28px;border-top:1px dashed #ccc;' colspan='3'>Hello, ".$detl->fname."</td></tr><tr><td valign='top' align='center' colspan='2'><p>".$cmnts."</p><br>Best Regards,<br>CCRC <br><br>This is an automated response, please DO NOT reply.</td></tr></tbody></table></td></tr></tbody></table>";
+            $this->load->library('email');
+            $this->email->set_mailtype("html");
+            $this->email->from('CCRC Team');
+            $this->email->to($detl->email);
+            $this->email->subject('Cerificate Verification From CCRC');
+            $this->email->message($htmlContent);
+            if($this->email->send()){
+                $this->session->set_flashdata('success', 'Mail Sent Successfully');
+                $this->db->update('cert_verify',$arr,array('id'=>$id));
+                redirect(admin_url('contacts/certificate_review'));
+            }
         }
     }
-   
-    }
-     function stayin_touch_reply($id=false)
-     {
+
+    function stayin_touch_reply($id=false) {
         $this->data['detl']= $detl=$this->db->get_where('consulting_form',array('id'=>$id))->row();
-         if($cmnts=$this->input->post('cmnts'))
-         {
-         $arr=array('rply_text'=>$cmnts,
-            'rply_status'=>1,
-            'rply_date'=>date("Y-m-d h:i:s"));
+        if($cmnts=$this->input->post('cmnts')) {
+            $arr=array('rply_text'=>$cmnts, 'rply_status'=>1, 'rply_date'=>date("Y-m-d h:i:s"));
 
-        $htmlContent = "
-        <table align='center' style='width:650px; text-align:center; background:#8e88881f;'>
-        <tbody>
-        <tr style='height:50px;background-color:#ffeabf;'>
-        <td valign='middle' style='color:white;'><h2 class='start'>CCRC</h2></td>
-        </tr>
-        <tr>
-        <td valign='top' align='center' colspan='2'>
-        <table align='center' style='height:380px; color:#000; width:600px;'>
-        <tbody>
-        <tr>
-        <td style='width:8px;'>&nbsp;</td>
-        <td align='center' style='font-size:28px;border-top:1px dashed #ccc;' colspan='3'>Hello, ".$detl->fname."</td>
-        </tr>
-        <tr>
-        <td valign='top' align='center' colspan='2'>
-        <p>".$cmnts."</p>
-        
-        <br>
-        Best Regards,<br>
-        CCRC <br><br>
-        This is an automated response, please DO NOT reply.
-        </td>
-        </tr>
-        </tbody>
-        </table>
-        </td>
-        </tr>
-        </tbody>
-        </table>
-        ";
+            $htmlContent = "<table align='center' style='width:650px; text-align:center; background:#8e88881f;'><tbody><tr style='height:50px;background-color:#ffeabf;'><td valign='middle' style='color:white;'><h2 class='start'>CCRC</h2></td></tr><tr><td valign='top' align='center' colspan='2'><table align='center' style='height:380px; color:#000; width:600px;'><tbody><tr><td style='width:8px;'>&nbsp;</td><td align='center' style='font-size:28px;border-top:1px dashed #ccc;' colspan='3'>Hello, ".$detl->fname."</td></tr><tr><td valign='top' align='center' colspan='2'><p>".$cmnts."</p><br>Best Regards,<br>CCRC <br><br>This is an automated response, please DO NOT reply.</td></tr></tbody></table></td></tr></tbody></table>";
 
-        // $this->load->library('email');
-        // $this->email->set_mailtype("html");
-        // $this->email->from('CCRC Team');
-        // $this->email->to($detl->email);
-
-        // $this->email->subject('Reply Message From CCRC');
-
-        // $this->email->message($htmlContent);
-
-        //   if($this->email->send()){
-        //    $this->session->set_flashdata('success', 'Replied Successfully');
-        //    $this->db->update('consulting_form',$arr,array('id'=>$id));
-        //    redirect(admin_url('contacts/stay_with_us'));
-
-        //     }
-
-        $mail = new PHPMailer(true);
-        try {
-            //Server settings
-            $mail->CharSet = 'UTF-8';
-            $mail->SetFrom($detl->email);
-            $mail->AddAddress($detl->email, 'Reply Email');
-            $mail->IsHTML(true);
-            $mail->Subject = 'Reply Message From Concepttocreation';
-            $mail->Body = $htmlContent;
-            //Send email via SMTP
-            $mail->IsSMTP();
-            $mail->SMTPAuth   = true;
-            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-            $mail->Host       = "smtp.gmail.com";
-            $mail->Port       = 587; //587 465
-            $mail->Username   = "no-reply@goigi.com";
-            $mail->Password   = "wj8jeml3eu0z";
-            $mail->send();
-            // echo 'Message has been sent';
-        } catch (Exception $e) {
-            $this->session->set_flashdata('error_message', "Message could not be sent. Mailer Error: {$mail->ErrorInfo}");
+            // $this->load->library('email');
+            // $this->email->set_mailtype("html");
+            // $this->email->from('CCRC Team');
+            // $this->email->to($detl->email);
+            // $this->email->subject('Reply Message From CCRC');
+            // $this->email->message($htmlContent);
+            // if($this->email->send()){
+            //    $this->session->set_flashdata('success', 'Replied Successfully');
+            //    $this->db->update('consulting_form',$arr,array('id'=>$id));
+            //    redirect(admin_url('contacts/stay_with_us'));
+            // }
+            $mail = new PHPMailer(true);
+            try {
+                //Server settings
+                $mail->CharSet = 'UTF-8';
+                $mail->SetFrom($detl->email);
+                $mail->AddAddress($detl->email, 'Reply Email');
+                $mail->IsHTML(true);
+                $mail->Subject = 'Reply Message From Concepttocreation';
+                $mail->Body = $htmlContent;
+                //Send email via SMTP
+                $mail->IsSMTP();
+                $mail->SMTPAuth   = true;
+                $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+                $mail->Host       = "smtp.gmail.com";
+                $mail->Port       = 587; //587 465
+                $mail->Username   = "no-reply@goigi.com";
+                $mail->Password   = "wj8jeml3eu0z";
+                $mail->send();
+                // echo 'Message has been sent';
+            } catch (Exception $e) {
+                $this->session->set_flashdata('error_message', "Message could not be sent. Mailer Error: {$mail->ErrorInfo}");
+            }
+            $this->session->set_flashdata('success', 'Replied Successfully');
+            $this->db->update('consulting_form',$arr,array('id'=>$id));
+            redirect(admin_url('contacts/stay_with_us'));
         }
-        $this->session->set_flashdata('success', 'Replied Successfully');
-        $this->db->update('consulting_form',$arr,array('id'=>$id));
-        redirect(admin_url('contacts/stay_with_us'));
-
-
-
-
-
-
-
-
-        }
-   
     }
 }
 
